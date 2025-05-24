@@ -1,5 +1,7 @@
 import type { Route } from "./+types/home";
 import Login from "../pages/login/Login";
+import AuthContextProviders from "~/context/login/AuthContext";
+import React,{useState} from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +11,13 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Login />;
+
+
+
+  return (
+      <AuthContextProviders>
+          <Login />
+      </AuthContextProviders>         
+   
+  ) ;
 }

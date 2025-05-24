@@ -1,8 +1,8 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import Button from "~/components/Button";
 import Loading from "~/components/Loading";
-import {ApiLogin, loading} from "~/context/login/AuthContext";
-import { verifyData } from "~/comum/valid";
+import { verifyData } from "~/comum/validForm";
+import { AuthContext } from "~/context/login/AuthContext";
 
 export default function Login(){
     const [formData, setFormData] = useState({
@@ -10,24 +10,21 @@ export default function Login(){
         password: ''
     });
     const form = useRef(null);
-    const [loadingRequest, setloadingRequest] = useContext(loading);
+    const {message, setMessage, loading, setLoading, activeMess, setActiveMess} = useContext(AuthContext)
+
+ 
 
     async function validPayload(formData:any){
         console.log("entrou aqui")
-        if(verifyData(formData)){
-            setloadingRequest()
-        
-          
-          setTimeout(() => {
+        setLoading(!loading)
 
-          }, 500)
-
-          loadingRequest.loading = false;
-        }
+        setTimeout(() => {
+            setLoading(false)
+        }, 2500)
+       
+        setMessage('');
         
     }
-  
-    
     return(
         <section>
             <form ref={form} onClick={(e) => e.preventDefault()}>
@@ -45,13 +42,13 @@ export default function Login(){
                         password:e.target.value
                     })}/>    
                 </div>
-                {!loadingRequest.loading ?
+                { !loading ?
                     <div>
                         <div>
-                            <Button title={"Login"} handleConfirm={() => validPayload(formData)} handleDisabled={loadingRequest.loading}  />
+                            <Button title={"Login"} handleConfirm={() => validPayload(formData)} handleDisabled={loading}  />
                         </div>
                         <div>
-                            <Button title={"Create Account"} handleConfirm={null} handleDisabled={loadingRequest.loading}  />
+                            <Button title={"Create Account"} handleConfirm={null} handleDisabled={loading}  />
                         </div>
                     </div>
                 :
@@ -60,6 +57,16 @@ export default function Login(){
                     </div>
                    
                 } 
+                {message != '' ?
+                
+                <div>
+                    <p>{message}</p>
+                </div>
+                :
+                <div>
+                    <p>Sem mensagem ainda</p>
+                </div>
+            }
             </form>
            
         </section>
