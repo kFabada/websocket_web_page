@@ -1,11 +1,4 @@
 import React,{createContext, useState, type Dispatch, type ReactNode, type SetStateAction} from "react";
-interface Data{
-    username:string,
-    password:string
-}
-interface FormData{
-    payload:Data
-}
 
 type Props = {
     activeMess:boolean,

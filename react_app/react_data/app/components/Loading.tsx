@@ -1,8 +1,12 @@
 import React,{} from "react";
-import gifLoading from "../assets/animation/load.gif";
+import gifLoading from "../assets/animation/WMDx.gif";
+import "~/style/Loading.css"
 
 export default function Loading(){
     return(
-        <img src={gifLoading} />
+        <div className="loading">
+            <img className="animation_gif" alt="gifloading" src={gifLoading} />
+        </div>
+        
     );
 }
