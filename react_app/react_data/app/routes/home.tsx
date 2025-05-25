@@ -1,4 +1,4 @@
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/Home";
 import Login from "../pages/login/Login";
 import AuthContextProviders from "~/context/login/AuthContext";
 
