@@ -4,7 +4,7 @@ import Loading from "~/components/Loading";
 import { AuthContext } from "~/context/login/AuthContext";
 import show from "../../assets/animation/showpass.png"
 import hide from "../../assets/animation/hidepass.png"
-import "../style/Login.css"
+import "./style/Login.css"
 
 export default function Login(){
     const {message, setMessage, loading, setLoading, activeMess, setActiveMess} = useContext(AuthContext);
@@ -40,7 +40,7 @@ export default function Login(){
         }  
     },[formData])
 
-    async function validPayload(formData:any){
+    async function validPayload(){
         setLoading(!loading)
     }
 
@@ -78,7 +78,7 @@ export default function Login(){
                         <div className="button_group">
                            
                             <div>
-                                <Button title={"Login"} handleConfirm={() => validPayload(formData)} handleDisabled={loading}  />
+                                <Button title={"Login"} handleConfirm={() => validPayload()} handleDisabled={loading}  />
                             </div>
                             <div>
                                 <Button title={"Create Account"} handleConfirm={null} handleDisabled={loading}  />

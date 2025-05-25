@@ -1,6 +1,10 @@
 import React,{createContext, useState, type Dispatch, type ReactNode, type SetStateAction} from "react";
+import type { Login } from "~/model/Login";
 
-type Props = {
+interface Props  {
+    dataUsuario:Login,
+    getLogin():Promise<Login>,
+    setDataUsuario:Dispatch<SetStateAction<Login>>,
     activeMess:boolean,
     setActiveMess:Dispatch<SetStateAction<boolean>>,
     message:string, 
@@ -10,7 +14,18 @@ type Props = {
 }
 
 export const AuthContext = createContext<Props>(
-    {
+     {
+        dataUsuario: {
+            id: '',
+            token: '',
+            username: ''
+        },
+        getLogin: () => {
+            throw new Error("");
+        },
+        setDataUsuario: () => {
+            throw new Error("");
+        },
         message: '', 
         setMessage: () => {}, 
         loading:false, 
@@ -21,10 +36,19 @@ export const AuthContext = createContext<Props>(
 
 
 export default function AuthContextProviders({children}: {children:ReactNode}){
+     const [dataUsuario, setDataUsuario] = useState<Login>({
+            id: '',
+            token: '',
+            username: ''
+        });
       const [message, setMessage] = useState('');
       const [loading, setLoading] = useState(false);
       const [activeMess, setActiveMess] = useState(false);
 
+     async function getLogin():Promise<Login>{
+        throw new Error("")
+      }
+      
       return(
         <AuthContext.Provider value={
             {
@@ -33,7 +57,10 @@ export default function AuthContextProviders({children}: {children:ReactNode}){
             loading, 
             setLoading, 
             activeMess, 
-            setActiveMess
+            setActiveMess,
+            dataUsuario, 
+            setDataUsuario,
+            getLogin
             }}>
                             {children}
             </AuthContext.Provider>
