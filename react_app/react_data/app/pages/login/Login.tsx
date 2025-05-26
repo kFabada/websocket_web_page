@@ -5,11 +5,14 @@ import { AuthContext } from "~/context/login/AuthContext";
 import show from "../../assets/animation/showpass.png"
 import hide from "../../assets/animation/hidepass.png"
 import "./style/Login.css"
+import CreateAccount from "../create_account/CreateAccount";
+import { relative } from "path";
 
 export default function Login(){
     const {message, setMessage, loading, setLoading, activeMess, setActiveMess} = useContext(AuthContext);
     const [cleanInput, setCleanInput] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -44,9 +47,16 @@ export default function Login(){
         setLoading(!loading)
     }
 
+    function openModalCreateAccount():void{
+        setOpenModal(true);
+    }
+
+    function closeModalCreateAccount():void{
+        setOpenModal(false);
+    }
+
     return(
         <section className="container">
-           
                 <form ref={form} className="form" onSubmit={(e) => e.preventDefault()}>
                     <div className="form_title">
                         <h1 className="form_item_title">WebSocket</h1>
@@ -68,20 +78,19 @@ export default function Login(){
                             <img height={25} width={25} onClick={() => setShowPassword(!showPassword)} style={{position: "absolute", right:"7px", bottom: "15px"}} src={!showPassword ? hide : show }/>                    
                         </div>    
                     </div>
-                     <div className="form_item">
-                            <div>
-                                <label style={{color: "white", fontSize: "14px", fontFamily: "sans-serif"}} htmlFor="check">lembra senha</label>
-                                <input id="check" name="check" type="checkbox" checked={formData.checkbox}  onChange={(e) => setFormData({...formData, checkbox:e.target.checked})} />
-                            </div>  
-                            </div> 
+                    <div className="form_item">
+                        <div>
+                            <label style={{color: "white", fontSize: "14px", fontFamily: "sans-serif"}} htmlFor="check">lembra senha</label>
+                            <input id="check" name="check" type="checkbox" checked={formData.checkbox}  onChange={(e) => setFormData({...formData, checkbox:e.target.checked})} />
+                        </div>  
+                    </div> 
                     { !loading ?
                         <div className="button_group">
-                           
                             <div>
                                 <Button title={"Login"} handleConfirm={() => validPayload()} handleDisabled={loading}  />
                             </div>
                             <div>
-                                <Button title={"Create Account"} handleConfirm={null} handleDisabled={loading}  />
+                                <Button title={"Create Account"} handleConfirm={() => openModalCreateAccount()} handleDisabled={loading}  />
                             </div>
                         </div>
                         :
@@ -93,6 +102,7 @@ export default function Login(){
                     null
                     }
                 </form>  
+                    <CreateAccount openModal={openModal} closeModal={() => closeModalCreateAccount()}/>
         </section>
-    );
+     );   
 }
