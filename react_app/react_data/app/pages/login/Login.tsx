@@ -4,13 +4,11 @@ import Loading from "~/components/Loading";
 import { AuthContext } from "~/context/login/AuthContext";
 import show from "../../assets/animation/showpass.png"
 import hide from "../../assets/animation/hidepass.png"
-import "./style/Login.css"
+import "~/style/Form.css"
 import CreateAccount from "../create_account/CreateAccount";
-import { relative } from "path";
 
 export default function Login(){
     const {message, setMessage, loading, setLoading, activeMess, setActiveMess} = useContext(AuthContext);
-    const [cleanInput, setCleanInput] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -19,8 +17,8 @@ export default function Login(){
         checkbox: false
     });
     const form = useRef<HTMLFormElement>(null);
+
     useEffect(() => {
-        console.log(formData)
         let inputs = form.current?.getElementsByClassName("form_item_input");
         if(!inputs)return
         
@@ -37,23 +35,27 @@ export default function Login(){
     },[formData]);
 
     useEffect(() => {
-        if(!cleanInput){
-            setFormData({...formData, username: '', password: ''});
-            setCleanInput(true);
-        }  
-    },[formData])
+        setFormData({...formData, username: '', password: ''}); 
+    },[])
 
+    useEffect(() => {
+        console.log("modal", openModal)
+    }, [openModal])
+    
     async function validPayload(){
         setLoading(!loading)
     }
 
     function openModalCreateAccount():void{
         setOpenModal(true);
+      
     }
 
     function closeModalCreateAccount():void{
-        setOpenModal(false);
+        setOpenModal(false); 
     }
+
+    if(openModal) return <CreateAccount openModal={openModal} closeModal={() => closeModalCreateAccount()}/>
 
     return(
         <section className="container">
@@ -87,10 +89,10 @@ export default function Login(){
                     { !loading ?
                         <div className="button_group">
                             <div>
-                                <Button title={"Login"} handleConfirm={() => validPayload()} handleDisabled={loading}  />
+                                <Button title={"Login"} handleConfirm={() => validPayload()} />
                             </div>
                             <div>
-                                <Button title={"Create Account"} handleConfirm={() => openModalCreateAccount()} handleDisabled={loading}  />
+                                <Button title={"Create Account"} handleConfirm={() => openModalCreateAccount()}/>
                             </div>
                         </div>
                         :
@@ -101,8 +103,7 @@ export default function Login(){
                     :
                     null
                     }
-                </form>  
-                    <CreateAccount openModal={openModal} closeModal={() => closeModalCreateAccount()}/>
+                </form>      
         </section>
      );   
 }

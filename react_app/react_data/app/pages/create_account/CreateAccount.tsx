@@ -1,6 +1,6 @@
-import React, { useState, type Dispatch, type SetStateAction } from "react";
+import React, { useEffect, useState } from "react";
 import "./style/CreateAccount.css"
-import "~/pages/login/style/Login.css"
+import "~/style/Form.css"
 import Loading from "~/components/Loading";
 import Button from "~/components/Button";
 
@@ -38,10 +38,15 @@ export default function CreateAccount({openModal, closeModal}:Props){
     }
 
     return(
-        <section style={ openModal ? {position: "absolute", zIndex: 1, overflow: "auto"} : {display: "none"} }  className="container">
+        <section style={!openModal ? {display:"none"} : {display:"flex"}} className="container">
             <form className="form" onSubmit={(e) => e.preventDefault()}>
                 <div style={{position: "relative"}}>
-                    <span onClick={() => closeModal()} style={{color: "red", fontSize:"30px", position: "absolute", left: "230px", cursor: "pointer"}}>X</span>
+                    <span onClick={() => 
+                        {
+                            closeModal()
+                            setLoading(false)
+                        }
+                    } style={{color: "red", fontSize:"30px", position: "absolute", left: "230px", cursor: "pointer"}}>X</span>
                 </div>
                 <div>
                     <h1 className="form_item_title">Cadastro</h1>
@@ -80,7 +85,7 @@ export default function CreateAccount({openModal, closeModal}:Props){
                 </div>
                 {!loading ?
                 <div className="button_group">
-                     <Button title="Cadastro" handleDisabled={false} handleConfirm={() => cadastro()} />
+                     <Button title="Cadastro" handleConfirm={() => cadastro()} />
                 </div>                    
                 :
                  <Loading/>
