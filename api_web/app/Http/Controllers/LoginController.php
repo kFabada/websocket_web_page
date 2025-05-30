@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Login;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\UpdateLoginRequest;
+use App\Services\LoginService;
 
 class LoginController extends Controller
 {
+
+    public function __construct(protected LoginService $loginService) {
+    
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -30,6 +36,7 @@ class LoginController extends Controller
     public function store(StoreLoginRequest $request)
     {
         //
+       return $this->loginService->store($request);
     }
 
     /**

@@ -12,11 +12,18 @@ class Login extends Model
 
     protected $table = "login";
     protected $fillable = [
+        'id',
         'username',
         'password',
         'email',
         'valid',
         'token',
         'valid_token'
+    ];
+
+    protected $hidden = [
+        'token',
+        'valid_token',
+        'password',
     ];
 }
