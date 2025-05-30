@@ -38,10 +38,6 @@ export default function Login(){
         setFormData({...formData, username: '', password: ''}); 
     },[])
 
-    useEffect(() => {
-        console.log("modal", openModal)
-    }, [openModal])
-    
     async function validPayload(){
         setLoading(!loading)
     }
