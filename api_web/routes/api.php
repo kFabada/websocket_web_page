@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,6 +9,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
+    $user = User::find(1);
+    $token = $user->createToken($request->name);
     return ['token' => $token->plainTextToken];
 });

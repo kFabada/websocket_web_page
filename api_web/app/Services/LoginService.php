@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\DefaultMethodsDataBase;
-use App\Interfaces\Interfaces\DefaultMethodsService;
+use App\Interfaces\DefaultMethodsService;
 use App\Models\Login;
 use App\Repository\LoginRepository;
 use Illuminate\Foundation\Http\FormRequest;
@@ -19,14 +19,11 @@ class LoginService implements DefaultMethodsService
         //
     }
     private static function validStore($payload){
-
         foreach($payload as $key){
             if($key == ""){
                 return false;
             }
         }
-
-
         return true;
     }
 
