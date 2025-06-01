@@ -22,8 +22,6 @@ class Login extends Model
     ];
 
     protected $hidden = [
-        'token',
-        'valid_token',
         'password',
     ];
 

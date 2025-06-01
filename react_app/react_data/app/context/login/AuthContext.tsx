@@ -5,12 +5,12 @@ interface Props  {
     dataUsuario:Login,
     getLogin():Promise<Login>,
     setDataUsuario:Dispatch<SetStateAction<Login>>,
-    activeMess:boolean,
-    setActiveMess:Dispatch<SetStateAction<boolean>>,
-    message:string, 
-    setMessage:Dispatch<SetStateAction<string>>, 
-    loading:boolean, 
-    setLoading:Dispatch<SetStateAction<boolean>>
+    // activeMess:boolean,
+    // setActiveMess:Dispatch<SetStateAction<boolean>>,
+    // message:string, 
+    // setMessage:Dispatch<SetStateAction<string>>, 
+    // loading:boolean, 
+    // setLoading:Dispatch<SetStateAction<boolean>>
 }
 
 export const AuthContext = createContext<Props>(
@@ -26,12 +26,12 @@ export const AuthContext = createContext<Props>(
         setDataUsuario: () => {
             throw new Error("");
         },
-        message: '', 
-        setMessage: () => {}, 
-        loading:false, 
-        setLoading: () => {}, 
-        activeMess: false, 
-        setActiveMess: () => {}
+        // message: '', 
+        // setMessage: () => {}, 
+        // loading:false, 
+        // setLoading: () => {}, 
+        // activeMess: false, 
+        // setActiveMess: () => {}
     });
 
 
@@ -41,9 +41,9 @@ export default function AuthContextProviders({children}: {children:ReactNode}){
             token: '',
             username: ''
         });
-      const [message, setMessage] = useState('');
-      const [loading, setLoading] = useState(false);
-      const [activeMess, setActiveMess] = useState(false);
+    //   const [message, setMessage] = useState('');
+    //   const [loading, setLoading] = useState(false);
+    //   const [activeMess, setActiveMess] = useState(false);
 
      async function getLogin():Promise<Login>{
         throw new Error("")
@@ -52,12 +52,6 @@ export default function AuthContextProviders({children}: {children:ReactNode}){
       return(
         <AuthContext.Provider value={
             {
-            message, 
-            setMessage, 
-            loading, 
-            setLoading, 
-            activeMess, 
-            setActiveMess,
             dataUsuario, 
             setDataUsuario,
             getLogin

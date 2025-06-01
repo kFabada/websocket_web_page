@@ -6,9 +6,14 @@ import show from "../../assets/animation/showpass.png"
 import hide from "../../assets/animation/hidepass.png"
 import "~/style/Form.css"
 import CreateAccount from "../create_account/CreateAccount";
+import { LoadingContext } from "~/context/loading/LoadingContext";
+import { MessageContext } from "~/context/message/MessageContext";
 
 export default function Login(){
-    const {message, setMessage, loading, setLoading, activeMess, setActiveMess} = useContext(AuthContext);
+    const {} = useContext(AuthContext);
+    const {loading, setLoading} = useContext(LoadingContext);
+    const {message, messageActive, setMessage, setMessageActive} = useContext(MessageContext);
+    
     const [showPassword, setShowPassword] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -94,10 +99,10 @@ export default function Login(){
                         :
                         <Loading/>
                     } 
-                    {message != '' ?
+                    {messageActive ?
                         <span className="message">{message}</span>
                     :
-                    null
+                        null
                     }
                 </form>      
         </section>
