@@ -5,22 +5,23 @@ import Loading from "~/components/Loading";
 import Button from "~/components/Button";
 
 interface Cadastro {
-    cpf:string,
-    data:string,
-    endereco:string,
-    cep:string,
-    cidade:string,
-    estado:string
-    login:string,
-    password:string
+    cpf: string,
+    data: string,
+    endereco: string,
+    cep: string,
+    cidade: string,
+    estado: string
+    username: string,
+    password: string
+    email: string
 }
 
 interface Props {
-    openModal:boolean
-    closeModal():void 
+    openModal: boolean
+    closeModal(): void
 }
 
-export default function CreateAccount({openModal, closeModal}:Props){
+export default function CreateAccount({ openModal, closeModal }: Props) {
     const [formCadastro, setFormCadastro] = useState<Cadastro>({
         cpf: '',
         cep: '',
@@ -28,69 +29,90 @@ export default function CreateAccount({openModal, closeModal}:Props){
         data: '',
         endereco: '',
         estado: '',
-        login: '',
-        password: ''
+        username: '',
+        password: '',
+        email: ''
     });
     const [loading, setLoading] = useState(false);
-    
-    async function cadastro(){
+
+    useEffect(() => {
+        console.log(JSON.stringify(formCadastro))
+    },[formCadastro])
+
+    async function cadastro() {
         setLoading(true);
+
+        const result = await fetch("http://127.0.0.1:8000/api/login", {
+            method: "POST",
+            body: JSON.stringify(formCadastro),
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': 'http://localhost:5173/'
+            }
+
+        })
+        setLoading(false);
+        const data = result.json();
+        console.log("dados", data);
     }
 
-    return(
-        <section style={!openModal ? {display:"none"} : {display:"flex"}} className="container">
+    return (
+        <section style={!openModal ? { display: "none" } : { display: "flex" }} className="container">
             <form className="form" onSubmit={(e) => e.preventDefault()}>
-                <div style={{position: "relative"}}>
-                    <span onClick={() => 
-                        {
-                            closeModal()
-                            setLoading(false)
-                        }
-                    } style={{color: "red", fontSize:"30px", position: "absolute", left: "230px", cursor: "pointer"}}>X</span>
+                <div style={{ position: "relative" }}>
+                    <span onClick={() => {
+                        closeModal()
+                        setLoading(false)
+                    }
+                    } style={{ color: "red", fontSize: "30px", position: "absolute", left: "230px", cursor: "pointer" }}>X</span>
                 </div>
                 <div>
                     <h1 className="form_item_title">Cadastro</h1>
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="cpf">CPF</label>
-                    <input className="form_item_input" type="text" id="cpf" name="cpf" onChange={(e) => setFormCadastro({...formCadastro, cpf: e.target.value})} />
+                    <input className="form_item_input" type="text" id="cpf" name="cpf" onChange={(e) => setFormCadastro({ ...formCadastro, cpf: e.target.value })} />
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="date">Data Nascimento</label>
-                    <input className="form_item_input" type="date" id="date" name="date" onChange={(e) => setFormCadastro({...formCadastro, data: e.target.value})}/>
+                    <input className="form_item_input" type="date" id="date" name="date" onChange={(e) => setFormCadastro({ ...formCadastro, data: e.target.value })} />
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="endereco">Endereço</label>
-                    <input className="form_item_input" type="text" id="endereco" name="endereco" onChange={(e) => setFormCadastro({...formCadastro, endereco: e.target.value})} />
+                    <input className="form_item_input" type="text" id="endereco" name="endereco" onChange={(e) => setFormCadastro({ ...formCadastro, endereco: e.target.value })} />
                 </div>
-                  <div className="form_item">
+                <div className="form_item">
                     <label className="form_item_label" htmlFor="cep">CEP</label>
-                    <input className="form_item_input" type="text" name="cep" id="cep" onChange={(e) => setFormCadastro({...formCadastro, cep: e.target.value})} />
+                    <input className="form_item_input" type="text" name="cep" id="cep" onChange={(e) => setFormCadastro({ ...formCadastro, cep: e.target.value })} />
                 </div>
-                  <div className="form_item">
+                <div className="form_item">
                     <label className="form_item_label" htmlFor="cidade">Cidade</label>
-                    <input className="form_item_input" type="text" name="cidade" id="cidade" onChange={(e) => setFormCadastro({...formCadastro, cidade: e.target.value})}/>
+                    <input className="form_item_input" type="text" name="cidade" id="cidade" onChange={(e) => setFormCadastro({ ...formCadastro, cidade: e.target.value })} />
                 </div>
-                  <div className="form_item">
+                <div className="form_item">
                     <label className="form_item_label" htmlFor="estado">Estado</label>
-                    <input className="form_item_input" type="text" name="estado" id="estado" onChange={(e) => setFormCadastro({...formCadastro, estado: e.target.value})} />
+                    <input className="form_item_input" type="text" name="estado" id="estado" onChange={(e) => setFormCadastro({ ...formCadastro, estado: e.target.value })} />
                 </div>
-                  <div className="form_item">
-                    <label className="form_item_label" htmlFor="login">Login</label>
-                    <input className="form_item_input" type="text" id="login" name="login" onChange={(e) => setFormCadastro({...formCadastro, login: e.target.value})} />
+                <div className="form_item">
+                    <label className="form_item_label" htmlFor="username">Login</label>
+                    <input className="form_item_input" type="text" id="username" name="username" onChange={(e) => setFormCadastro({ ...formCadastro, username: e.target.value })} />
                 </div>
-                  <div className="form_item">
-                    <label className="form_item_label" htmlFor="senha">Senha</label>
-                    <input className="form_item_input" type="password" id="senha" name="senha"  onChange={(e) => setFormCadastro({...formCadastro, password: e.target.value})}/>
+                <div className="form_item">
+                    <label className="form_item_label" htmlFor="password">Senha</label>
+                    <input className="form_item_input" type="password" id="password" name="password" onChange={(e) => setFormCadastro({ ...formCadastro, password: e.target.value })} />
+                </div>
+                 <div className="form_item">
+                    <label className="form_item_label" htmlFor="email">Email</label>
+                    <input className="form_item_input" type="email" id="email" name="email" onChange={(e) => {setFormCadastro({...formCadastro, email: e.target.value})}} />
                 </div>
                 {!loading ?
-                <div className="button_group">
-                     <Button title="Cadastro" handleConfirm={() => cadastro()} />
-                </div>                    
-                :
-                 <Loading/>
+                    <div className="button_group">
+                        <Button title="Cadastro" handleConfirm={() => cadastro()} />
+                    </div>
+                    :
+                    <Loading />
                 }
-            </form>            
+            </form>
         </section>
     );
 }

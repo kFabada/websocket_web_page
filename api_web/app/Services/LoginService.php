@@ -34,25 +34,27 @@ class LoginService implements DefaultMethodsService
                 'valid' => true,
             ];
 
+       
+
         $existEmail = $this->loginMethods->verifyExistEmail($payload['email']);
         $existUsername = $this->loginMethods->verifyExistUsername($payload['username']);
 
         if($existEmail){
-            return Response("Email ja existe", 400);
+            return Response()->json(["message" => "Email ja existe"], 400);
         }
 
         if($existUsername){
-            return Response("Username ja existe", 400);
+            return Response()->json(["message" =>  "Username ja existe"], 400);
         }
 
         $valid = LoginService::validStore($payload);
 
         if($valid){
           $data = $this->loginRepository->store($payload);
-          return Response($data, 201);
+          return Response()->json($data, 201);
         }
 
-       return Response("Dados Incompletos", 400);
+       return Response()->json(["message" => "Dados Incompletos"], 400);
     }
     public function show($id){
 
