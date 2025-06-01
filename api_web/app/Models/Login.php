@@ -26,4 +26,20 @@ class Login extends Model
         'valid_token',
         'password',
     ];
+
+    public function verifyExistUsername($username){
+        return Login::select('username')
+        ->where('username', '=', $username)
+        ->first();
+
+       
+    }
+
+    public function verifyExistEmail($email){
+         return Login::select('email')
+        ->where('email', '=', $email)
+        ->first();
+
+       
+    }
 }

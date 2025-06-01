@@ -14,10 +14,8 @@ class LoginService implements DefaultMethodsService
     /**
      * Create a new class instance.
      */
-    public function __construct(protected LoginRepository $loginRepository)
-    {
-        //
-    }
+    public function __construct(
+       protected DefaultMethodsDataBase $loginRepository, protected Login $loginMethods){}
     private static function validStore($payload){
         foreach($payload as $key){
             if($key == ""){
@@ -29,12 +27,23 @@ class LoginService implements DefaultMethodsService
 
     public function store(FormRequest $request){
          
-       $payload = [
-            'username' => $request['username'],
-            'password' => $request['password'],
-            'email' => $request['email'],
-            'valid' => true,
-        ];
+        $payload = [
+                'username' => $request['username'],
+                'password' => $request['password'],
+                'email' => $request['email'],
+                'valid' => true,
+            ];
+
+        $existEmail = $this->loginMethods->verifyExistEmail($payload['email']);
+        $existUsername = $this->loginMethods->verifyExistUsername($payload['username']);
+
+        if($existEmail){
+            return Response("Email ja existe", 400);
+        }
+
+        if($existUsername){
+            return Response("Username ja existe", 400);
+        }
 
         $valid = LoginService::validStore($payload);
 

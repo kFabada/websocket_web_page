@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\DefaultMethodsService;
 use App\Models\Login;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\UpdateLoginRequest;
@@ -10,8 +11,8 @@ use App\Services\LoginService;
 class LoginController extends Controller
 {
 
-    public function __construct(protected LoginService $loginService) {
-    
+    public function __construct(protected DefaultMethodsService $loginService ) {
+        
     }
 
     /**
