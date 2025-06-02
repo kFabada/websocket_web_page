@@ -17,7 +17,15 @@ class Usuario extends Model
        'adress', 
        'cep', 
        'state', 
+       'city',
        'cpf', 
        'id_login'
     ];
+
+
+    public function verifyExistCpf($cpf){
+        return Usuario::select('cpf')
+            ->where('cpf', '=', $cpf)
+            ->first();
+    }
 }

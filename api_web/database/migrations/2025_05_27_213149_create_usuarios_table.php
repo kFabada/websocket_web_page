@@ -18,6 +18,7 @@ return new class extends Migration
             $table->addColumn('string', 'adress')->nullable(true);
             $table->addColumn('string', 'cep')->nullable(true);
             $table->addColumn('string', 'state')->nullable(true);
+             $table->addColumn('string', 'city')->nullable(true);
             $table->addColumn('string', 'cpf')->unique();
             $table->foreignId('id_login')->constrained('login', 'id')->unique();
             $table->timestamps();

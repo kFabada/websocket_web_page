@@ -5,12 +5,13 @@ import Loading from "~/components/Loading";
 import Button from "~/components/Button";
 
 interface Cadastro {
+    name: string
     cpf: string,
-    data: string,
-    endereco: string,
+    date: string,
+    adress: string,
     cep: string,
-    cidade: string,
-    estado: string
+    city: string,
+    state: string
     username: string,
     password: string
     email: string
@@ -23,21 +24,18 @@ interface Props {
 
 export default function CreateAccount({ openModal, closeModal }: Props) {
     const [formCadastro, setFormCadastro] = useState<Cadastro>({
+        name: '',
         cpf: '',
         cep: '',
-        cidade: '',
-        data: '',
-        endereco: '',
-        estado: '',
+        city: '',
+        date: '',
+        adress: '',
+        state: '',
         username: '',
         password: '',
         email: ''
     });
     const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        console.log(JSON.stringify(formCadastro))
-    },[formCadastro])
 
     async function cadastro() {
         setLoading(true);
@@ -75,11 +73,11 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="date">Data Nascimento</label>
-                    <input className="form_item_input" type="date" id="date" name="date" onChange={(e) => setFormCadastro({ ...formCadastro, data: e.target.value })} />
+                    <input className="form_item_input" type="date" id="date" name="date" onChange={(e) => setFormCadastro({ ...formCadastro, date: e.target.value })} />
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="endereco">Endereço</label>
-                    <input className="form_item_input" type="text" id="endereco" name="endereco" onChange={(e) => setFormCadastro({ ...formCadastro, endereco: e.target.value })} />
+                    <input className="form_item_input" type="text" id="endereco" name="endereco" onChange={(e) => setFormCadastro({ ...formCadastro, adress: e.target.value })} />
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="cep">CEP</label>
@@ -87,11 +85,15 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="cidade">Cidade</label>
-                    <input className="form_item_input" type="text" name="cidade" id="cidade" onChange={(e) => setFormCadastro({ ...formCadastro, cidade: e.target.value })} />
+                    <input className="form_item_input" type="text" name="cidade" id="cidade" onChange={(e) => setFormCadastro({ ...formCadastro, city: e.target.value })} />
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="estado">Estado</label>
-                    <input className="form_item_input" type="text" name="estado" id="estado" onChange={(e) => setFormCadastro({ ...formCadastro, estado: e.target.value })} />
+                    <input className="form_item_input" type="text" name="estado" id="estado" onChange={(e) => setFormCadastro({ ...formCadastro, state: e.target.value })} />
+                </div>
+                 <div className="form_item">
+                    <label className="form_item_label" htmlFor="name">Nome</label>
+                    <input className="form_item_input" type="text" id="name" name="name" onChange={(e) => setFormCadastro({ ...formCadastro, name: e.target.value })} />
                 </div>
                 <div className="form_item">
                     <label className="form_item_label" htmlFor="username">Login</label>

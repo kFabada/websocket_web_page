@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
+use App\Interfaces\DefaultMethodsService;
 
 class UsuarioController extends Controller
 {
+
+    public function __construct(protected DefaultMethodsService $defaultMethodsService) {}
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +32,8 @@ class UsuarioController extends Controller
      */
     public function store(StoreUsuarioRequest $request)
     {
-        //
+        
+
     }
 
     /**
