@@ -3,7 +3,9 @@ import "./style/CreateAccount.css"
 import "~/style/Form.css"
 import Loading from "~/components/Loading";
 import Button from "~/components/Button";
-
+import StateSelect from "~/components/StateSelect";
+import { city } from "~/comum/CityData";
+import { state } from "~/comum/StateData";
 interface Cadastro {
     name: string
     cpf: string,
@@ -36,6 +38,10 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
         email: ''
     });
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        console.log(formCadastro)
+    },[formCadastro])
 
     async function cadastro() {
         setLoading(true);
@@ -84,13 +90,19 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
                     <input className="form_item_input" type="text" name="cep" id="cep" onChange={(e) => setFormCadastro({ ...formCadastro, cep: e.target.value })} />
                 </div>
                 <div className="form_item">
-                    <label className="form_item_label" htmlFor="cidade">Cidade</label>
-                    <input className="form_item_input" type="text" name="cidade" id="cidade" onChange={(e) => setFormCadastro({ ...formCadastro, city: e.target.value })} />
+                    {/* <label className="form_item_label" htmlFor="cidade">Cidade</label>
+                    <input className="form_item_input" type="text" name="cidade" id="cidade" onChange={(e) => setFormCadastro({ ...formCadastro, city: e.target.value })} /> */}
+                    <label className="form_item_label" htmlFor="estado">Estado</label>
+                    <StateSelect formData={formCadastro} setFormData={setFormCadastro} object={"city"} item={city} optionNullValue="Escolha sua Cidade"/>
                 </div>
                 <div className="form_item">
+                      <label className="form_item_label" htmlFor="estado">Estado</label>
+                      <StateSelect formData={formCadastro} setFormData={setFormCadastro} object={"state"} item={state} optionNullValue="Escolha um Estado"/>
+                </div>
+                {/* <div className="form_item">
                     <label className="form_item_label" htmlFor="estado">Estado</label>
                     <input className="form_item_input" type="text" name="estado" id="estado" onChange={(e) => setFormCadastro({ ...formCadastro, state: e.target.value })} />
-                </div>
+                </div> */}
                  <div className="form_item">
                     <label className="form_item_label" htmlFor="name">Nome</label>
                     <input className="form_item_input" type="text" id="name" name="name" onChange={(e) => setFormCadastro({ ...formCadastro, name: e.target.value })} />

@@ -3,8 +3,7 @@ import "../style/Button.css"
 
 interface ButtonType {
     title:string,
-    handleConfirm:any
-    
+    handleConfirm:any   
 }
 
 export default function Button({title, handleConfirm} :ButtonType){
