@@ -15,6 +15,10 @@ class LoginRepository implements DefaultMethodsDataBase
      public function store($request){
          return Login::create($request);
     }
+    
+     public function index(){
+        
+    }
     public function show($id){
 
     }

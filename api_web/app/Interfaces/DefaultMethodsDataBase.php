@@ -9,6 +9,7 @@ interface DefaultMethodsDataBase
     //
     public function store($request);
     public function show($id);
+    public function index();
     public function update($request, $id);
     public function destroy($request);
 }

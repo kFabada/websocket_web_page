@@ -95,6 +95,12 @@ class LoginService implements DefaultMethodsService
         }
         return Response()->json(["message" => "Dados Incompletos"], 400);
     }
+
+     public function index()
+    {
+        //
+       
+    }
     public function show($id) {}
     public function update(FormRequest $request, $id) {}
     public function destroy(FormRequest $request) {}
