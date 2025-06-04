@@ -6,14 +6,12 @@ use App\Interfaces\DefaultMethodsService;
 use App\Models\Login;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\UpdateLoginRequest;
-use App\Services\LoginService;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
 
-    public function __construct(protected DefaultMethodsService $loginService ) {
-        
-    }
+    public function __construct(protected DefaultMethodsService $loginService ) {}
 
     /**
      * Display a listing of the resource.
@@ -36,7 +34,6 @@ class LoginController extends Controller
      */
     public function store(StoreLoginRequest $request)
     {
-        //
        return $this->loginService->store($request);
     }
 

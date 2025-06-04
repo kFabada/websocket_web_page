@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLoginRequest extends FormRequest
+class StoreLoginRequest extends FormRequest 
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,10 +19,21 @@ class StoreLoginRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            //
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+            
+    //         'username' => ['required', 'string'],
+    //         'email' => ['required', 'string'],
+    //         'password' => ['required', 'string'] 
+    //     ];
+    // }
+
+    // public function messages(){
+    //     return [
+    //         'username.required' => 'username é requerido',
+    //         'email.required' => 'email é requerido',
+    //         'password.required' => 'password é requerido'
+    //     ];
+    // }
 }

@@ -11,10 +11,10 @@ interface Props<T> {
 
 export default function StateSelect<T>({ setFormData, formData, object, item, optionNullValue }: Props<T>) {
     const select = item.map((value, i) =>
-        <option className="select_item" key={i} value={value}>{value}</option>
+        <option key={i} value={value}>{value}</option>
     )
     return (
-        <select className="select" name="state" id="state" onChange={
+        <select className="select" onChange={
             (e) => setFormData(
                 { ...formData, [object]: e.target.value })}>
             <option>{optionNullValue}</option>        

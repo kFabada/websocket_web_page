@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\CreateAccoutException;
 use App\Interfaces\DefaultMethodsDataBase;
 use App\Interfaces\DefaultMethodsService;
 use App\Models\Login;
@@ -10,6 +11,7 @@ use App\Repository\LoginRepository;
 use App\Repository\UsuarioRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use PhpParser\ErrorHandler\Throwing;
 
 class LoginService implements DefaultMethodsService
 {
@@ -23,13 +25,24 @@ class LoginService implements DefaultMethodsService
         protected Usuario $usuarioMethods
     ) {}
     private static function validStore($payload)
-    {
-        foreach ($payload as $key) {
-            if ($key == "") {
-                return false;
+    {   
+             $errors = 0;
+             $keyPosition = 0; 
+             $message = array([]);
+             $key = array_keys($payload);
+
+             foreach ($payload as $key) {
+                if ($key == "") {
+                    $errors++;
+                    $value = $key[$keyPosition].":"."Valor vazio precisam ser diferente de null";
+                    array_push($message, $value);
+                    $keyPosition++;
+                }
             }
-        }
-        return true;
+             if($errors > 0){
+                return response()->json(['mess' => $message], 400);
+             }
+             return true;
     }
 
     public function store(FormRequest $request)
@@ -49,6 +62,7 @@ class LoginService implements DefaultMethodsService
             "state" => $request['state'],
         ];
 
+       
         $existEmail = $this->loginMethods->verifyExistEmail($payload['email']);
         $existUsername = $this->loginMethods->verifyExistUsername($payload['username']);
         $existCpf = $this->usuarioMethods->verifyExistCpf($request['cpf']);
@@ -93,7 +107,7 @@ class LoginService implements DefaultMethodsService
                 return Response()->json(['message' => 'sem id do login'], 400);
             }
         }
-        return Response()->json(["message" => "Dados Incompletos"], 400);
+        // return Response()->json(["message" => "Dados Incompletos"], 400);
     }
 
      public function index()
