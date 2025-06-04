@@ -26,22 +26,11 @@ class LoginService implements DefaultMethodsService
     ) {}
     private static function validStore($payload)
     {   
-             $errors = 0;
-             $keyPosition = 0; 
-             $message = array([]);
-             $key = array_keys($payload);
-
              foreach ($payload as $key) {
                 if ($key == "") {
-                    $errors++;
-                    $value = $key[$keyPosition].":"."Valor vazio precisam ser diferente de null";
-                    array_push($message, $value);
-                    $keyPosition++;
+                   return false;
                 }
             }
-             if($errors > 0){
-                return response()->json(['mess' => $message], 400);
-             }
              return true;
     }
 
@@ -107,7 +96,7 @@ class LoginService implements DefaultMethodsService
                 return Response()->json(['message' => 'sem id do login'], 400);
             }
         }
-        // return Response()->json(["message" => "Dados Incompletos"], 400);
+        return Response()->json(["message" => "Dados Incompletos"], 400);
     }
 
      public function index()
