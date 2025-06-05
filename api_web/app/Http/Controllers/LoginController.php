@@ -6,7 +6,10 @@ use App\Interfaces\DefaultMethodsService;
 use App\Models\Login;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\UpdateLoginRequest;
+use App\Http\Requests\Validation;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -32,7 +35,7 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLoginRequest $request)
+    public function store(StoreLoginRequest $request):JsonResponse
     {
        return $this->loginService->store($request);
     }
