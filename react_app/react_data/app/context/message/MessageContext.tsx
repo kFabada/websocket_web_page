@@ -1,6 +1,6 @@
 import React, { createContext, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
 
-interface Message {
+export interface Message {
     message:string,
     setMessage: Dispatch<SetStateAction<string>>
     messageActive:boolean

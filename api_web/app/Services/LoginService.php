@@ -24,15 +24,15 @@ class LoginService implements DefaultMethodsService
         protected UsuarioRepository $usuarioRepository,
         protected Usuario $usuarioMethods
     ) {}
-    private static function validStore($payload)
-    {   
-             foreach ($payload as $key) {
-                if ($key == "") {
-                   return false;
-                }
-            }
-             return true;
-    }
+    // private static function validStore($payload)
+    // {   
+    //          foreach ($payload as $key) {
+    //             if ($key == "") {
+    //                return false;
+    //             }
+    //         }
+    //          return true;
+    // }
 
     public function store(FormRequest $request)
     {
@@ -68,9 +68,8 @@ class LoginService implements DefaultMethodsService
             return Response()->json(["message" =>  "Cpf ja existe"], 400);
         }
 
-        $valid = LoginService::validStore($payload);
-
-        if ($valid) {
+        // $valid = LoginService::validStore($payload);
+        
             $data = $this->loginRepository->store($payload);
             $id = $data['id'];
 
@@ -88,15 +87,16 @@ class LoginService implements DefaultMethodsService
                 $user = $this->usuarioRepository->store($payloadUsuario);
 
                 if ($user['id']) {
-                    return Response()->json(['login' => $data, 'usuario' => $user], 201);
+                    return Response()->json(['message' => "Dados Cadastrados"], 201);
+                    // return Response()->json(['login' => $data, 'usuario' => $user], 201);
                 } else {
-                    return Response()->json(['message' => 'sem id do usuario falha no cadastro'], 400);
+                    return Response()->json(['message' => 'Sem id do usuario falha no cadastro'], 400);
                 }
             } else {
                 return Response()->json(['message' => 'sem id do login'], 400);
             }
-        }
-        return Response()->json(["message" => "Dados Incompletos"], 400);
+        
+        // return Response()->json(["message" => "Dados Incompletos"], 400);
     }
 
      public function index()

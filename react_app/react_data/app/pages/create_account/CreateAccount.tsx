@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style/CreateAccount.css"
 import "~/style/Form.css"
 import Loading from "~/components/Loading";
@@ -6,7 +6,10 @@ import Button from "~/components/Button";
 import StateSelect from "~/components/StateSelect";
 import { city } from "~/comum/CityData";
 import { state } from "~/comum/StateData";
-interface Cadastro {
+import { LoadingContext } from "~/context/loading/LoadingContext";
+import { MessageContext } from "~/context/message/MessageContext";
+import {ApiCreatAccount} from "~/store/ApiCreatAccountRepository";
+export interface Cadastro {
     name: string
     cpf: string,
     date: string,
@@ -37,29 +40,29 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
         password: '',
         email: ''
     });
-    const [loading, setLoading] = useState(false);
+    const {loading, setLoading} = useContext(LoadingContext);
+    const {message, messageActive, setMessage, setMessageActive} = useContext(MessageContext);
 
     useEffect(() => {
         console.log(formCadastro)
     },[formCadastro])
 
     async function cadastro() {
-        setLoading(true);
-
-        const result = await fetch("http://127.0.0.1:8000/api/login", {
-            method: "POST",
-            body: JSON.stringify(formCadastro),
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': 'http://localhost:5173/'
-            }
-
-        })
-        setLoading(false);
-        const data = result.json();
-        console.log("dados", data);
+        try{
+            setLoading(true);
+            const data = await ApiCreatAccount(formCadastro);   
+            setLoading(false);
+            console.log("dados", data);
+            setMessageActive(true);
+            setMessage(data.message);
+        }catch(err){
+            console.error(err);
+            setLoading(false);
+            setMessage('')
+            setMessageActive(false)
+        }
+      
     }
-
     return (
         <section style={!openModal ? { display: "none" } : { display: "flex" }} className="container">
             <form className="form" onSubmit={(e) => e.preventDefault()}>
@@ -121,11 +124,21 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
                 </div>
                 {!loading ?
                     <div className="button_group">
-                        <Button title="Cadastro" handleConfirm={() => cadastro()} />
+                        <Button type="submit" title="Cadastro" handleConfirm={() => cadastro()} />
                     </div>
                     :
                     <Loading />
                 }
+                {messageActive && message != '' ?
+                    <div className="message">
+                        <span className="message_text">{message}</span>
+                    </div>
+                    :
+                    <>
+                    
+                    </>
+                }
+               
             </form>
         </section>
     );

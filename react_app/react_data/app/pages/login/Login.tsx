@@ -50,7 +50,6 @@ export default function Login(){
 
     function openModalCreateAccount():void{
         setOpenModal(true);
-      
     }
 
     function closeModalCreateAccount():void{
