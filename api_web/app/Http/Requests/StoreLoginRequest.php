@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
+
+use Closure;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -51,7 +53,7 @@ class StoreLoginRequest extends FormRequest
             'adress.required' => 'adress é requerido',
             'city.required' => 'city é requerido',
             'cep.required' => 'cep é requerido',
-            'state.required' => 'state é requerido' 
+            'state.required' => 'state é requerido' ,
         ];
     }
 }

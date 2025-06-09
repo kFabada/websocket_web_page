@@ -2,17 +2,14 @@
 
 namespace App\Services;
 
-use App\Exceptions\CreateAccoutException;
+
 use App\Interfaces\DefaultMethodsDataBase;
 use App\Interfaces\DefaultMethodsService;
 use App\Models\Login;
 use App\Models\Usuario;
-use App\Repository\LoginRepository;
 use App\Repository\UsuarioRepository;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
-use PhpParser\ErrorHandler\Throwing;
-
+use Illuminate\Support\Facades\Hash;
 class LoginService implements DefaultMethodsService
 {
     /**
@@ -24,22 +21,13 @@ class LoginService implements DefaultMethodsService
         protected UsuarioRepository $usuarioRepository,
         protected Usuario $usuarioMethods
     ) {}
-    // private static function validStore($payload)
-    // {   
-    //          foreach ($payload as $key) {
-    //             if ($key == "") {
-    //                return false;
-    //             }
-    //         }
-    //          return true;
-    // }
 
     public function store(FormRequest $request)
     {
 
         $payload = [
             'username' => $request['username'],
-            'password' => $request['password'],
+            'password' => Hash::make($request['password']),
             'email' => $request['email'],
             'valid' => true,
             "cpf" => $request['cpf'],
@@ -51,21 +39,20 @@ class LoginService implements DefaultMethodsService
             "state" => $request['state'],
         ];
 
-       
         $existEmail = $this->loginMethods->verifyExistEmail($payload['email']);
         $existUsername = $this->loginMethods->verifyExistUsername($payload['username']);
         $existCpf = $this->usuarioMethods->verifyExistCpf($request['cpf']);
 
         if ($existEmail) {
-            return Response()->json(["message" => "Email ja existe"], 400);
+            return Response()->json(["message" => "Email ja existe", 'status' => 400], 400);
         }
 
         if ($existUsername) {
-            return Response()->json(["message" =>  "Username ja existe"], 400);
+            return Response()->json(["message" =>  "Username ja existe", 'status' => 400], 400);
         }
 
         if($existCpf){
-            return Response()->json(["message" =>  "Cpf ja existe"], 400);
+            return Response()->json(["message" =>  "Cpf ja existe", 'status' => 400], 400);
         }
 
         // $valid = LoginService::validStore($payload);
@@ -87,13 +74,13 @@ class LoginService implements DefaultMethodsService
                 $user = $this->usuarioRepository->store($payloadUsuario);
 
                 if ($user['id']) {
-                    return Response()->json(['message' => "Dados Cadastrados"], 201);
+                    return Response()->json(['message' => "Dados Cadastrados", 'status' => 201], 201);
                     // return Response()->json(['login' => $data, 'usuario' => $user], 201);
                 } else {
-                    return Response()->json(['message' => 'Sem id do usuario falha no cadastro'], 400);
+                    return Response()->json(['message' => 'Sem id do usuario falha no cadastro', 'status' => 400], 400);
                 }
             } else {
-                return Response()->json(['message' => 'sem id do login'], 400);
+                return Response()->json(['message' => 'sem id do login', 'status' => 400], 400);
             }
         
         // return Response()->json(["message" => "Dados Incompletos"], 400);
