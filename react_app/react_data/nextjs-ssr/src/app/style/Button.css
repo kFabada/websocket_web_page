@@ -1,0 +1,22 @@
+.button{
+    font-size: 15px;
+    padding: 5px;
+    height: 45px;
+    width: 120px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 20px;
+    color: #FFFF;
+}
+
+.button_active{
+    cursor: pointer;
+    background-color: rgb(41, 73, 201);
+}
+
+.button_active_pointer:hover{
+    opacity: 0.9;
+}
+
+.button_disable{
+     background-color: rgb(66, 66, 66);
+}

@@ -1,0 +1,10 @@
+.loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.animation_gif{
+    height: 60px;
+    width: 60px;
+}

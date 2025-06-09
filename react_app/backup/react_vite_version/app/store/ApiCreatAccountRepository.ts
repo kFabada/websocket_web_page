@@ -12,6 +12,7 @@ export async function ApiCreatAccount(formCadastro: Cadastro): Promise<ResponseM
         });
         const data = result.json();
         return data;
+        
     }catch(erros){
         console.log("error:" + erros);
     }
