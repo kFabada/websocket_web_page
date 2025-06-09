@@ -47,19 +47,34 @@ export default function CreateAccount({ openModal, closeModal }: Props) {
         console.log(formCadastro)
     },[formCadastro])
 
-    async function cadastro() {
+    async function cadastro(): Promise<void> {
         try{
             setLoading(true);
             const data = await ApiCreatAccount(formCadastro);   
             setLoading(false);
             console.log("dados", data);
+            console.log("status", data.status);
+
             setMessageActive(true);
             setMessage(data.message);
+            
+            // if(data.status === 200 || data.status === 422 || data.status === 201){
+                
+            //     setMessageActive(true);
+            //     setMessage(data.data.message);
+            // }
+            // if(data.status === 422){
+            //     setMessageActive(true);
+            //     setMessage(data.data.message);
+            // }
+            // if(data.status === 500){
+            //     setMessageActive(true);
+            //     setMessage("Aconteceu Alguma coisa com o Cadastro");
+            //     throw new Error(data.data.message);
+            // }
         }catch(err){
-            console.error(err);
+            console.error("erro" + err);
             setLoading(false);
-            setMessage('')
-            setMessageActive(false)
         }
       
     }
